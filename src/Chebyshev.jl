@@ -1,6 +1,6 @@
 
 
-export ChebIntegratorGen, 𝘾, 𝘾⁻¹, IntegrateCoeff, δ₁, δ₋₁,δ̂₁,δ̂₋₁,DerivativeCheb
+# export ChebIntegratorGen, 𝘾, 𝘾⁻¹, IntegrateCoeff, δ₁, δ₋₁,δ̂₁,δ̂₋₁,DerivativeCheb
 
 
 
@@ -16,6 +16,7 @@ function Node(N, type)
             x[i] = cos(i*π/(N+1))
 
         end
+        
     elseif type == 2
 
         for i=1:N
@@ -24,6 +25,8 @@ function Node(N, type)
 
         end
     end
+
+    return x
 
 
 
