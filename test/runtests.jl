@@ -13,7 +13,7 @@ using KrylovKit
 # end
 
 
-N = 200
+N = 50
 Space = (0.,1.)
 kind = :Cheb1
 SpectDisc = SpectralDiscretization1D(Space, :Cheb1, N)
@@ -39,10 +39,10 @@ for i=1:N
 
 end
 
-κ = 1/10
+κ = 1/4
 ψₙ = (1 .+ x*κ)
-φₙ = exp.(-10*x.^2)
-k = 20
+φₙ = exp.(-x.^2)
+k = 10.
 
 K = fₙ -> 2*κ ./ψₙ .* ∫₀ˣ(fₙ)  - k^2* 4*x .* ∫₀ˣ( x./ψₙ.^2 .* ∫₀ˣ(fₙ) )  
 b = 4*x .* ∫₀ˣ(φₙ)
