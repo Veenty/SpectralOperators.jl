@@ -13,15 +13,24 @@ using KrylovKit
 # end
 
 
-N = 50
+N = 20
 Space = (0.,1.)
 kind = :Cheb1
 SpectDisc = SpectralDiscretization1D(Space, :Cheb1, N)
 T = CoeffTransform(SpectDisc)
 T⁻¹ = RealTransform(SpectDisc)
 ∫̂ = IntegrateCoef(SpectDisc)
+∫̂l = IntegrateCoefL(SpectDisc)
+∫̂r = IntegrateCoefR(SpectDisc)
 
 ∫ = f -> 1/(SpectDisc.Space[2] - SpectDisc.Space[1])*(T⁻¹∘∫̂∘T)(f)
+
+∫l = f -> 1/(SpectDisc.Space[2] - SpectDisc.Space[1])*(T⁻¹∘∫̂l∘T)(f)
+
+∫r = f -> 1/(SpectDisc.Space[2] - SpectDisc.Space[1])*(T⁻¹∘∫̂r∘T)(f)
+
+
+
 
 function ∫₀ˣ(f)
 
@@ -33,11 +42,16 @@ end
 
 x = zeros(N)
 
+
 for i=1:N
 
-    x[i] = (cos((i-1)*π/(N-1)) +1)/2
+    x[i] = cos((i-1)*π/(N-1))#(cos((i-1)*π/(N-1)) +1)/2
 
 end
+
+
+plot(x, ∫(φₙ))
+
 
 κ = 1/4
 ψₙ = (1 .+ x*κ)

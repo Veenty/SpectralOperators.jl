@@ -3,7 +3,7 @@ module SpectralOperators
 # Write your package code here.
 
 export SpectralDiscretization1D, CoeffTransform, RealTransform, IntegrateCoef, InverseTransform
-
+export IntegrateCoefL, IntegrateCoefR
 
 
 using FFTW
@@ -81,6 +81,27 @@ function IntegrateCoef(SpectDisc)
     return ∫̂
 
 end
+
+function IntegrateCoefL(SpectDisc)
+
+    if SpectDisc.kind == :Cheb1 || SpectDisc.kind == :Cheb2
+        ∫̂ = f̂ -> IntegrateCoeffL(f̂)
+    end
+
+    return ∫̂
+
+end
+
+function IntegrateCoefR(SpectDisc)
+    
+        if SpectDisc.kind == :Cheb1 || SpectDisc.kind == :Cheb2
+            ∫̂ = f̂ -> IntegrateCoeffR(f̂)
+        end
+    
+        return ∫̂
+    
+    end
+
 
 
 function InverseTransform(f̂, SpectDisc)

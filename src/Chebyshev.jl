@@ -16,7 +16,7 @@ function Node(N, type)
             x[i] = cos(i*π/(N+1))
 
         end
-        
+
     elseif type == 2
 
         for i=1:N
@@ -40,7 +40,7 @@ function IntegrateCoeff(f̂)
  
     ∫f̂[1] = 0.0
     ∫f̂[2] = (f̂[1] - f̂[3]/2)
-    ∫f̂[3] = (f̂[2]/4 - f̂[4]/4)
+    ∫f̂[3] = (f̂[2] - f̂[4])/4
     for k=4:(N -1)
         # ∫f̂[k+1] = (f̂[k] - f̂[k+2])/(2*k)
         ∫f̂[k] = (f̂[k-1] - f̂[k+1])/(2*(k-1))
@@ -52,6 +52,59 @@ function IntegrateCoeff(f̂)
     return ∫f̂
  
  end
+
+function IntegrateCoeffL(f̂)
+
+   N = size(f̂)[1]
+   ∫f̂ = zeros(typeof(f̂[1]),N) 
+
+   
+
+   ∫f̂[2] = (f̂[1] - f̂[3]/2)
+   ∫f̂[3] = (f̂[2]/4 - f̂[4]/4)
+   for k=4:(N -1)
+       # ∫f̂[k+1] = (f̂[k] - f̂[k+2])/(2*k)
+       ∫f̂[k] = (f̂[k-1] - f̂[k+1])/(2*(k-1))
+   end
+
+   ∫f̂[N] = f̂[N-1]/(2*(N-1))
+
+   for k=1:(N -1)
+      ∫f̂[1] += ∫f̂[k+1] *(-1)^(k-1)
+   end
+
+
+   return ∫f̂
+
+end
+
+function IntegrateCoeffR(f̂)
+
+   N = size(f̂)[1]
+   ∫f̂ = zeros(typeof(f̂[1]),N)
+ 
+
+   
+
+   ∫f̂[2] = (f̂[3]/2 - f̂[1])
+   ∫f̂[3] = (f̂[2]/4 - f̂[4]/4)
+   for k=4:(N -1)
+       # ∫f̂[k+1] = (f̂[k] - f̂[k+2])/(2*k)
+       ∫f̂[k] = (f̂[k-1] - f̂[k+1])/(2*(k-1))
+   end
+
+   ∫f̂[N] = f̂[N-1]/(2*(N-1))
+
+   for k=1:(N-1)
+      ∫f̂[1] += -∫f̂[k+1] 
+   end
+
+
+   return ∫f̂
+
+end
+
+
 
  function der_matrix(deg::Int, a::Real=-1, b::Real=1)
     N = deg
